@@ -55,3 +55,19 @@ Ce fichier explique seulement les parties qu'on a terminées. On l'ajoutera à c
 **Rebond :** le Doodle est replacé sur la plateforme. Le ressort donne `SPRING_JUMP_VELOCITY` ; les autres donnent `JUMP_VELOCITY`. La plateforme marron devient inactive. La fonction s'arrête après un rebond.
 
 **À dire à l'oral :** « Un chevauchement seul ne suffit pas : je vérifie aussi que le Doodle descend et arrive sur le dessus. Ensuite je lui donne une vitesse négative pour le faire remonter. »
+
+## 3.3 — Caméra et score
+
+**Changement dans `game.py` :** si le Doodle monte au-dessus du seuil, `scroll_camera()` le remet au seuil et descend toutes les plateformes de la même distance. Cette distance augmente le score ; le meilleur score est mis à jour si besoin.
+
+**Nettoyage :** les plateformes sorties sous l'écran sont retirées de la liste existante, puis `generate_new_platforms()` est appelée.
+
+**À dire à l'oral :** « Le personnage reste à la même hauteur à l'écran ; ce sont les plateformes qui descendent. La distance défilée devient le score. »
+
+## 3.4 — Nouvelles plateformes
+
+**Changement dans `game.py` :** `generate_new_platforms()` part de la plateforme la plus haute (le plus petit `y`). Si la liste est vide, elle part du bas de l'écran. Elle ajoute des plateformes jusqu'au-dessus de l'écran, avec un `x` valide et un écart vertical aléatoire.
+
+**Types :** elle réutilise `choose_platform_type(0.55, 0.20, 0.13)` : 55 % vertes, 20 % bleues, 13 % à ressort et 12 % marron.
+
+**À dire à l'oral :** « Je pars de la plateforme la plus haute et j'en ajoute au-dessus jusqu'à dépasser le haut de l'écran. Je réutilise la fonction de tirage des types. »

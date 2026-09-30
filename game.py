@@ -115,15 +115,21 @@ def scroll_camera():
     Fait défiler le monde lorsque le Doodle dépasse CAMERA_SCROLL_THRESHOLD.
     Met à jour le score et maintient les plateformes visibles.
     """
-    # TODO : Lorsque le Doodle dépasse le seuil de caméra, il doit rester
-    # visuellement au seuil pendant que les plateformes sont déplacées vers
-    # le bas de la même distance.
-    #
-    # Le score doit représenter la distance verticale ainsi parcourue et le
-    # meilleur score doit être mis à jour. Les plateformes sorties sous
-    # l'écran doivent être retirées, puis de nouvelles plateformes générées.
+    if doodle_dict["y"] >= CAMERA_SCROLL_THRESHOLD:
+        return
 
-    return
+    scroll_distance = CAMERA_SCROLL_THRESHOLD - doodle_dict["y"]
+    doodle_dict["y"] = CAMERA_SCROLL_THRESHOLD
+
+    for platform in PLATFORMS:
+        platform["y"] += scroll_distance
+
+    doodle_dict["score"] += scroll_distance
+    if doodle_dict["score"] > doodle_dict["high_score"]:
+        doodle_dict["high_score"] = doodle_dict["score"]
+
+    PLATFORMS[:] = [platform for platform in PLATFORMS if platform["y"] < SCREEN_HEIGHT]
+    generate_new_platforms()
 
 # ===========================================================
 
@@ -134,14 +140,13 @@ def generate_new_platforms():
     Génère de nouvelles plateformes au-dessus du haut de l'écran pour maintenir
     un flux continu lorsque la caméra défile.
     """
-    # TODO : Complétez cette fonction en vous inspirant de la logique de
-    # génération initiale, sans la recopier inutilement.
-    #
-    # Vous devrez partir de la plateforme actuellement la plus haute et
-    # continuer à ajouter des plateformes tant que nécessaire. Utilisez
-    # choose_platform_type(...) avec les probabilités indiquées dans le README.
+    highest_y = min(platform["y"] for platform in PLATFORMS) if PLATFORMS else SCREEN_HEIGHT
 
-    return
+    while highest_y > 0:
+        highest_y -= random.randint(MIN_PLATFORM_GAP, MAX_PLATFORM_GAP)
+        x = random.randint(0, SCREEN_WIDTH - PLATFORM_WIDTH)
+        platform_type = choose_platform_type(0.55, 0.20, 0.13)
+        PLATFORMS.append(create_platform(x, highest_y, platform_type))
 
 # ===========================================================
 
