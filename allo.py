@@ -1,1 +1,1 @@
-print("allo")
+print("allso")
