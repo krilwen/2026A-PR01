@@ -41,3 +41,17 @@ Ce fichier explique seulement les parties qu'on a terminées. On l'ajoutera à c
 **Changement dans `game.py` :** `move_platforms()` ajoute `vx` à `x` seulement pour les plateformes bleues actives. Au bord gauche (`x <= 0`) ou droit (`x + width >= SCREEN_WIDTH`), elle garde la plateforme dans la fenêtre et inverse le sens de `vx`.
 
 **À dire à l'oral :** « La vitesse `vx` fait bouger les plateformes bleues. Aux bords, je corrige leur position et je change le signe de la vitesse pour les faire repartir dans l'autre sens. »
+
+## 3.1 — Gravité
+
+**Changement dans `game.py` :** `apply_gravity()` ajoute `GRAVITY` à `vel_y`, puis ajoute cette nouvelle vitesse à `y` à chaque image.
+
+**À dire à l'oral :** « La gravité augmente la vitesse vers le bas. Une vitesse négative fait monter le Doodle ; une vitesse positive le fait descendre. »
+
+## 3.2 — Collision et rebond
+
+**Changement dans `game.py` :** `check_platform_collisions()` vérifie que le Doodle descend, que la plateforme est active, que leurs rectangles se touchent et que ses pieds arrivent par-dessus. La position précédente des pieds est estimée avec `vel_y` ; une tolérance de 14 pixels est admise.
+
+**Rebond :** le Doodle est replacé sur la plateforme. Le ressort donne `SPRING_JUMP_VELOCITY` ; les autres donnent `JUMP_VELOCITY`. La plateforme marron devient inactive. La fonction s'arrête après un rebond.
+
+**À dire à l'oral :** « Un chevauchement seul ne suffit pas : je vérifie aussi que le Doodle descend et arrive sur le dessus. Ensuite je lui donne une vitesse négative pour le faire remonter. »
