@@ -27,3 +27,17 @@ Ce fichier explique seulement les parties qu'on a terminées. On l'ajoutera à c
 **Selon le type :** seule la bleue reçoit `MOVING_PLATFORM_SPEED` ; seule la plateforme à ressort a 10 pixels de hauteur en plus. Les autres ont une vitesse nulle et une hauteur normale.
 
 **À dire à l'oral :** « Je réutilise une seule fonction pour créer les quatre types. Le paramètre `platform_type` choisit l'image et les propriétés propres à chaque plateforme. »
+
+## 2.2 — Choix et génération des plateformes
+
+**Dans `platforms.py` :** `choose_platform_type()` tire un nombre entre 0 et 1. Les seuils cumulés 0,65, 0,82 et 0,92 donnent 65 % de vertes, 17 % de bleues, 10 % de ressorts et 8 % de marron.
+
+**Dans `window.py` :** une boucle ajoute des plateformes jusqu'en haut. Leur `x` reste dans la fenêtre, leur `y` monte d'un écart aléatoire, et leur type vient de `choose_platform_type()`.
+
+**À dire à l'oral :** « J'ai mis le tirage des types dans une fonction réutilisable. La génération l'appelle pour chaque plateforme et avance vers le haut avec un espacement aléatoire. »
+
+## 2.3 — Plateformes bleues mobiles
+
+**Changement dans `game.py` :** `move_platforms()` ajoute `vx` à `x` seulement pour les plateformes bleues actives. Au bord gauche (`x <= 0`) ou droit (`x + width >= SCREEN_WIDTH`), elle garde la plateforme dans la fenêtre et inverse le sens de `vx`.
+
+**À dire à l'oral :** « La vitesse `vx` fait bouger les plateformes bleues. Aux bords, je corrige leur position et je change le signe de la vitesse pour les faire repartir dans l'autre sens. »

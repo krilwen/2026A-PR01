@@ -61,14 +61,14 @@ def choose_platform_type(green_probability, blue_probability, spring_probability
     plateforme marron.
     """
 
-    # TODO : Utilisez random.random() et les probabilités reçues en paramètres
-    # pour retourner l'une des chaînes suivantes :
-    # "green", "blue", "spring" ou "brown".
-    #
-    # Attention : les seuils utilisés avec random.random() doivent être
-    # cumulatifs.
-
-    return "green"  # Valeur temporaire à remplacer
+    draw = random.random()
+    if draw < green_probability:
+        return "green"
+    if draw < green_probability + blue_probability:
+        return "blue"
+    if draw < green_probability + blue_probability + spring_probability:
+        return "spring"
+    return "brown"
 
 # ===========================================================
 
